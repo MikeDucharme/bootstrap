@@ -124,6 +124,7 @@ module.exports = function (grunt) {
           preserveComments: 'some'
         },
         src: [
+          // @TODO drop less.min.js?
           'docs/assets/js/_vendor/less.min.js',
           'docs/assets/js/_vendor/jszip.min.js',
           'docs/assets/js/_vendor/uglify.min.js',
@@ -153,6 +154,7 @@ module.exports = function (grunt) {
       files: 'js/tests/index.html'
     },
 
+    // @TODO Drop the less
     less: {
       compileCore: {
         options: {
@@ -207,6 +209,7 @@ module.exports = function (grunt) {
       }
     },
 
+    // @TODO Should we still run csslint?
     csslint: {
       options: {
         csslintrc: 'less/.csslintrc'
@@ -227,6 +230,7 @@ module.exports = function (grunt) {
       }
     },
 
+    // @TODO Likely don't need cssmin
     cssmin: {
       options: {
         compatibility: 'ie8',
@@ -329,6 +333,7 @@ module.exports = function (grunt) {
       }
     },
 
+    // @TODO Drop html5 validation
     validation: {
       options: {
         charset: 'utf-8',
@@ -354,6 +359,7 @@ module.exports = function (grunt) {
         files: '<%= jshint.test.src %>',
         tasks: ['jshint:test', 'qunit']
       },
+      // @TODO drop less
       less: {
         files: 'less/*.less',
         tasks: 'less'
@@ -398,8 +404,10 @@ module.exports = function (grunt) {
   require('time-grunt')(grunt);
 
   // Docs HTML validation task
+  // @TODO Don't need to validation HTML
   grunt.registerTask('validate-html', ['jekyll', 'validation']);
 
+  // @TODO Not sure about keeping tests or just going full dist right away
   var runSubset = function (subset) {
     return !process.env.TWBS_TEST || process.env.TWBS_TEST === subset;
   };

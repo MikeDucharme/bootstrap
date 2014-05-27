@@ -31,6 +31,7 @@ module.exports = function generateRawFilesJs(grunt, banner) {
   if (!banner) {
     banner = '';
   }
+  // @TODO Drop less, include sass?
   var dirs = ['js', 'less', 'fonts'];
   var files = banner + dirs.map(getFiles).reduce(function (combined, file) {
     return combined + file;
