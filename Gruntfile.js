@@ -15,6 +15,10 @@ module.exports = function (grunt) {
     return string.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
   };
 
+  // Additional shell requirement to run compass commands
+  // http://stackoverflow.com/questions/10456865/running-a-command-in-a-grunt-task#answer-14863414
+  var shell = require('shelljs');
+
   var fs = require('fs');
   var path = require('path');
   var generateGlyphiconsData = require('./grunt/bs-glyphicons-data-generator.js');
@@ -464,4 +468,5 @@ module.exports = function (grunt) {
   // Task for updating the npm packages used by the Travis build.
   grunt.registerTask('update-shrinkwrap', ['exec:npmUpdate', 'exec:npmShrinkWrap', '_update-shrinkwrap']);
   grunt.registerTask('_update-shrinkwrap', function () { updateShrinkwrap.call(this, grunt); });
+)
 };
