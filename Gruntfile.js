@@ -154,62 +154,7 @@ module.exports = function (grunt) {
       files: 'js/tests/index.html'
     },
 
-    // @TODO Drop the less
-    less: {
-      compileCore: {
-        options: {
-          strictMath: true,
-          sourceMap: true,
-          outputSourceFiles: true,
-          sourceMapURL: '<%= pkg.name %>.css.map',
-          sourceMapFilename: 'dist/css/<%= pkg.name %>.css.map'
-        },
-        files: {
-          'dist/css/<%= pkg.name %>.css': 'less/bootstrap.less'
-        }
-      },
-      compileTheme: {
-        options: {
-          strictMath: true,
-          sourceMap: true,
-          outputSourceFiles: true,
-          sourceMapURL: '<%= pkg.name %>-theme.css.map',
-          sourceMapFilename: 'dist/css/<%= pkg.name %>-theme.css.map'
-        },
-        files: {
-          'dist/css/<%= pkg.name %>-theme.css': 'less/theme.less'
-        }
-      }
-    },
-
-    autoprefixer: {
-      options: {
-        browsers: ['last 2 versions', 'ie 8', 'ie 9', 'android 2.3', 'android 4', 'opera 12']
-      },
-      core: {
-        options: {
-          map: true
-        },
-        src: 'dist/css/<%= pkg.name %>.css'
-      },
-      theme: {
-        options: {
-          map: true
-        },
-        src: 'dist/css/<%= pkg.name %>-theme.css'
-      },
-      docs: {
-        src: 'docs/assets/css/_src/docs.css'
-      },
-      examples: {
-        expand: true,
-        cwd: 'docs/examples/',
-        src: ['**/*.css'],
-        dest: 'docs/examples/'
-      }
-    },
-
-    // @TODO Should we still run csslint?
+    // @TODO leaving csslint and cssmin here for now even though compass is compressing by default
     csslint: {
       options: {
         csslintrc: 'less/.csslintrc'
@@ -230,7 +175,6 @@ module.exports = function (grunt) {
       }
     },
 
-    // @TODO Likely don't need cssmin
     cssmin: {
       options: {
         compatibility: 'ie8',
@@ -359,11 +303,6 @@ module.exports = function (grunt) {
         files: '<%= jshint.test.src %>',
         tasks: ['jshint:test', 'qunit']
       },
-      // @TODO drop less
-      less: {
-        files: 'less/*.less',
-        tasks: 'less'
-      }
     },
 
     sed: {
@@ -404,10 +343,10 @@ module.exports = function (grunt) {
   require('time-grunt')(grunt);
 
   // Docs HTML validation task
-  // @TODO Don't need to validation HTML
+  // @TODO Keeping validation for now
   grunt.registerTask('validate-html', ['jekyll', 'validation']);
 
-  // @TODO Not sure about keeping tests or just going full dist right away
+  // @TODO Keeping tests for now
   var runSubset = function (subset) {
     return !process.env.TWBS_TEST || process.env.TWBS_TEST === subset;
   };
@@ -422,7 +361,7 @@ module.exports = function (grunt) {
     // original testSubTasks:
     // testSubtasks = testSubtasks.concat(['dist-css', 'csslint', 'jshint', 'jscs', 'qunit', 'build-customizer-html']);
     // updated testSubtasks without css functions
-    testSubtasks = testSubtasks.concat(['jshint', 'jscs', 'qunit', 'build-customizer-html']);
+    testSubtasks = testSubtasks.concat(['csslint', 'jshint', 'jscs', 'qunit', 'build-customizer-html']);
   }
   // Skip HTML validation if running a different subset of the test suite
   if (runSubset('validate-html') &&
