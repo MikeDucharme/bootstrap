@@ -1,3 +1,5 @@
+// @TODO What is this doing? Grep for twbs-font-path for references
+
 @function twbs-font-path($path) {
   @return font-url($path, true);
 }
@@ -5,3 +7,5 @@
 @function twbs-image-path($path) {
   @return image-url($path, true);
 }
+
+// End @TODO

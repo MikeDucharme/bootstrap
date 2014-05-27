@@ -1,3 +1,5 @@
+// @TODO What is this doing? See _variables.scss for use
+
 @function twbs-font-path($path) {
   @return font-path($path);
 }
@@ -5,3 +7,5 @@
 @function twbs-image-path($path) {
   @return image-path($path);
 }
+
+// End @TODO

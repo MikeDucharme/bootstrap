@@ -18,7 +18,9 @@ module.exports = function (grunt) {
   var fs = require('fs');
   var path = require('path');
   var generateGlyphiconsData = require('./grunt/bs-glyphicons-data-generator.js');
+  // @TODO What will we lose with removing this? Is this where we would rather run "compass clean/compile"?
   var BsLessdocParser = require('./grunt/bs-lessdoc-parser.js');
+  // End @TODO
   var generateRawFiles = require('./grunt/bs-raw-files-generator.js');
   var updateShrinkwrap = require('./grunt/shrinkwrap.js');
 

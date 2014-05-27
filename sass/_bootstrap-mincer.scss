@@ -1,3 +1,5 @@
+// @TODO What is this doing? Grep for twbs-font-path for references
+
 // Mincer asset helper functions
 //
 // This must be imported into a .css.ejs.scss file.
@@ -15,3 +17,5 @@
 @function twbs-image-path($file) {
   @return "<%- asset_path('#{$file}') %>";
 }
+
+// End @TODO
