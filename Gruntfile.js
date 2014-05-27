@@ -419,7 +419,10 @@ module.exports = function (grunt) {
   var testSubtasks = [];
   // Skip core tests if running a different subset of the test suite
   if (runSubset('core')) {
-    testSubtasks = testSubtasks.concat(['dist-css', 'csslint', 'jshint', 'jscs', 'qunit', 'build-customizer-html']);
+    // original testSubTasks:
+    // testSubtasks = testSubtasks.concat(['dist-css', 'csslint', 'jshint', 'jscs', 'qunit', 'build-customizer-html']);
+    // updated testSubtasks without css functions
+    testSubtasks = testSubtasks.concat(['jshint', 'jscs', 'qunit', 'build-customizer-html']);
   }
   // Skip HTML validation if running a different subset of the test suite
   if (runSubset('validate-html') &&
@@ -442,14 +445,18 @@ module.exports = function (grunt) {
   grunt.registerTask('dist-js', ['concat', 'uglify']);
 
   // CSS distribution task.
-  grunt.registerTask('less-compile', ['less:compileCore', 'less:compileTheme']);
-  grunt.registerTask('dist-css', ['less-compile', 'autoprefixer', 'usebanner', 'csscomb', 'cssmin']);
+  // @TODO Disabling less compilation for testing - then @TODO is delete all references from this calling code.
+  //grunt.registerTask('less-compile', ['less:compileCore', 'less:compileTheme']);
+  //grunt.registerTask('dist-css', ['less-compile', 'autoprefixer', 'usebanner', 'csscomb', 'cssmin']);
 
   // Docs distribution task.
   grunt.registerTask('dist-docs', 'copy:docs');
 
   // Full distribution task.
-  grunt.registerTask('dist', ['clean', 'dist-css', 'copy:fonts', 'dist-js', 'dist-docs']);
+  // original code
+  // grunt.registerTask('dist', ['clean', 'dist-css', 'copy:fonts', 'dist-js', 'dist-docs']);
+  // dropped dist-css task
+  grunt.registerTask('dist', ['clean', 'copy:fonts', 'dist-js', 'dist-docs']);
 
   // Default task.
   grunt.registerTask('default', ['test', 'dist', 'build-glyphicons-data', 'build-customizer']);
