@@ -15,12 +15,7 @@ module.exports = function (grunt) {
     return string.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
   };
 
-  var fs = require('fs');
-  var path = require('path');
   var generateGlyphiconsData = require('./grunt/bs-glyphicons-data-generator.js');
-  // @TODO What will we lose with removing this? Is this where we would rather run "compass clean/compile"?
-  var BsLessdocParser = require('./grunt/bs-lessdoc-parser.js');
-  // End @TODO
   var generateRawFiles = require('./grunt/bs-raw-files-generator.js');
   var updateShrinkwrap = require('./grunt/shrinkwrap.js');
 
@@ -157,7 +152,7 @@ module.exports = function (grunt) {
     // @TODO leaving csslint and cssmin here for now even though compass is compressing by default
     csslint: {
       options: {
-        csslintrc: 'less/.csslintrc'
+        csslintrc: 'sass/.csslintrc'
       },
       src: [
         'dist/css/bootstrap.css',
@@ -259,24 +254,6 @@ module.exports = function (grunt) {
       docs: {}
     },
 
-    jade: {
-      compile: {
-        options: {
-          pretty: true,
-          data: function () {
-            var filePath = path.join(__dirname, 'less/variables.less');
-            var fileContent = fs.readFileSync(filePath, {encoding: 'utf8'});
-            var parser = new BsLessdocParser(fileContent);
-            return {sections: parser.parseFile()};
-          }
-        },
-        files: {
-          'docs/_includes/customizer-variables.html': 'docs/_jade/customizer-variables.jade',
-          'docs/_includes/nav/customize.html': 'docs/_jade/customizer-nav.jade'
-        }
-      }
-    },
-
     // @TODO Drop html5 validation
     validation: {
       options: {
@@ -359,9 +336,9 @@ module.exports = function (grunt) {
   // Skip core tests if running a different subset of the test suite
   if (runSubset('core')) {
     // original testSubTasks:
-    // testSubtasks = testSubtasks.concat(['dist-css', 'csslint', 'jshint', 'jscs', 'qunit', 'build-customizer-html']);
+    // testSubtasks = testSubtasks.concat(['dist-css', 'csslint', 'jshint', 'jscs', 'qunit']);
     // updated testSubtasks without css functions
-    testSubtasks = testSubtasks.concat(['csslint', 'jshint', 'jscs', 'qunit', 'build-customizer-html']);
+    testSubtasks = testSubtasks.concat(['csslint', 'jshint', 'jscs', 'qunit']);
   }
   // Skip HTML validation if running a different subset of the test suite
   if (runSubset('validate-html') &&
@@ -408,8 +385,8 @@ module.exports = function (grunt) {
   grunt.registerTask('build-glyphicons-data', function () { generateGlyphiconsData.call(this, grunt); });
 
   // task for building customizer
-  grunt.registerTask('build-customizer', ['build-customizer-html', 'build-raw-files']);
-  grunt.registerTask('build-customizer-html', 'jade');
+  grunt.registerTask('build-customizer', ['build-raw-files']);
+
   grunt.registerTask('build-raw-files', 'Add scripts/less files to customizer.', function () {
     var banner = grunt.template.process('<%= banner %>');
     generateRawFiles(grunt, banner);

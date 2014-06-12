@@ -64,7 +64,12 @@
   }
   @if ($type == offset) {
     .col-#{$class}-offset-#{$index} {
-      margin-left: percentage(($index / $grid-columns));
+      @if ($index == 0) {
+        margin-left: 0;
+      }
+      @else {
+        margin-left: percentage(($index / $grid-columns));
+      }
     }
   }
 }

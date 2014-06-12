@@ -34,7 +34,8 @@
 @mixin btn-styles($btn-color: #555) {
   @include gradient-vertical($start-color: $btn-color, $end-color: darken($btn-color, 12%));
   @include reset-filter(); // Disable gradients for IE9 because filter bleeds through rounded corners
-  background-repeat: repeat-x;
+  // Already defined in gradient-vertical
+  // background-repeat: repeat-x; 
   border-color: darken($btn-color, 14%);
 
   &:hover,
@@ -60,7 +61,7 @@
 }
 
 // Apply the mixin to the buttons
-.btn-default { @include btn-styles($btn-default-bg); text-shadow: 0 1px 0 #fff; border-color: #ccc; }
+.btn-default { @include btn-styles($btn-default-bg); text-shadow: 0 1px 0 #fff; }
 .btn-primary { @include btn-styles($btn-primary-bg); }
 .btn-success { @include btn-styles($btn-success-bg); }
 .btn-info    { @include btn-styles($btn-info-bg); }
